@@ -80,10 +80,10 @@ definitions:
         type: integer
       shortBody:
         type: string
-      tags:
-        description: '[]tag.Tag'
+      labels:
+        description: '[]label.Label'
         items:
-          $ref: '#/definitions/tag.Tag'
+          $ref: '#/definitions/label.Label'
         type: array
     type: object
   report.UpdateReportDTO:
@@ -97,7 +97,7 @@ definitions:
       id:
         type: integer
     type: object
-  tag.CreateTagDTO:
+  label.CreateLabelDTO:
     properties:
       department:
         type: string
@@ -107,14 +107,14 @@ definitions:
     - department
     - name
     type: object
-  tag.GetAllTagsDTO:
+  label.GetAllLabelsDTO:
     properties:
-      tags:
+      labels:
         items:
-          $ref: '#/definitions/tag.Tag'
+          $ref: '#/definitions/label.Label'
         type: array
     type: object
-  tag.Tag:
+  label.Label:
     properties:
       department:
         type: string
@@ -126,7 +126,7 @@ definitions:
     - department
     - name
     type: object
-  tag.UpdateTagDTO:
+  label.UpdateLabelDTO:
     properties:
       department:
         type: string
@@ -169,7 +169,7 @@ paths:
           schema:
             $ref: '#/definitions/e.ErrorResponse'
       summary: getAccount
-      tags:
+      labels:
       - account
   /api/v1/accounts/login:
     post:
@@ -200,7 +200,7 @@ paths:
           schema:
             $ref: '#/definitions/e.ErrorResponse'
       summary: Login
-      tags:
+      labels:
       - account
   /api/v1/accounts/register:
     post:
@@ -231,7 +231,7 @@ paths:
           schema:
             $ref: '#/definitions/e.ErrorResponse'
       summary: Register
-      tags:
+      labels:
       - account
   /api/v1/reports:
     get:
@@ -239,9 +239,9 @@ paths:
       - application/json
       description: create report
       parameters:
-      - description: reports search by tag
+      - description: reports search by label
         in: query
-        name: tag
+        name: label
         type: string
       produces:
       - application/json
@@ -268,8 +268,8 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get all reports from user filter by tag
-      tags:
+      summary: Get all reports from user filter by label
+      labels:
       - reports
     post:
       consumes:
@@ -308,7 +308,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create report
-      tags:
+      labels:
       - reports
   /api/v1/reports/{id}:
     delete:
@@ -338,7 +338,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Delete Report
-      tags:
+      labels:
       - reports
     get:
       consumes:
@@ -369,7 +369,7 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get Report By Id
-      tags:
+      labels:
       - reports
     patch:
       consumes:
@@ -404,13 +404,13 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Update Report
-      tags:
+      labels:
       - reports
-  /api/v1/reports/{id}/tags:
+  /api/v1/reports/{id}/labels:
     get:
       consumes:
       - application/json
-      description: get tags for report
+      description: get labels for report
       parameters:
       - description: id
         in: path
@@ -423,7 +423,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.GetAllTagsDTO'
+            $ref: '#/definitions/label.GetAllLabelsDTO'
         "400":
           description: Bad Request
           schema:
@@ -442,25 +442,25 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get all tags on one report
-      tags:
-      - tags
+      summary: Get all labels on one report
+      labels:
+      - labels
     post:
       consumes:
       - application/json
-      description: create tag
+      description: create label
       parameters:
       - description: id
         in: path
         name: id
         required: true
         type: string
-      - description: tag info
+      - description: label info
         in: body
         name: dto
         required: true
         schema:
-          $ref: '#/definitions/tag.CreateTagDTO'
+          $ref: '#/definitions/label.CreateLabelDTO'
       produces:
       - application/json
       responses:
@@ -486,21 +486,21 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Create tag
-      tags:
-      - tags
-  /api/v1/tags:
+      summary: Create label
+      labels:
+      - labels
+  /api/v1/labels:
     get:
       consumes:
       - application/json
-      description: get tags from user
+      description: get labels from user
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.GetAllTagsDTO'
+            $ref: '#/definitions/label.GetAllLabelsDTO'
         "400":
           description: Bad Request
           schema:
@@ -519,14 +519,14 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get all tags
-      tags:
-      - tags
-  /api/v1/tags/{id}:
+      summary: Get all labels
+      labels:
+      - labels
+  /api/v1/labels/{id}:
     delete:
       consumes:
       - application/json
-      description: delete one tag by ID
+      description: delete one label by ID
       parameters:
       - description: id
         in: path
@@ -558,13 +558,13 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Delete one tag by ID
-      tags:
-      - tags
+      summary: Delete one label by ID
+      labels:
+      - labels
     get:
       consumes:
       - application/json
-      description: get one tag by ID
+      description: get one label by ID
       parameters:
       - description: id
         in: path
@@ -577,7 +577,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/tag.Tag'
+            $ref: '#/definitions/label.Label'
         "400":
           description: Bad Request
           schema:
@@ -596,25 +596,25 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get one tag by ID
-      tags:
-      - tags
+      summary: Get one label by ID
+      labels:
+      - labels
     patch:
       consumes:
       - application/json
-      description: update one tag by ID
+      description: update one label by ID
       parameters:
       - description: id
         in: path
         name: id
         required: true
         type: string
-      - description: tag info
+      - description: label info
         in: body
         name: dto
         required: true
         schema:
-          $ref: '#/definitions/tag.UpdateTagDTO'
+          $ref: '#/definitions/label.UpdateLabelDTO'
       produces:
       - application/json
       responses:
@@ -638,23 +638,23 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Update tag by ID
-      tags:
-      - tags
-  /api/v1/tags/{id}/tags/{tag_id}:
+      summary: Update label by ID
+      labels:
+      - labels
+  /api/v1/labels/{id}/labels/{label_id}:
     delete:
       consumes:
       - application/json
-      description: detach tag by ID from report by ID
+      description: detach label by ID from report by ID
       parameters:
       - description: id
         in: path
         name: id
         required: true
         type: string
-      - description: tag id
+      - description: label id
         in: path
-        name: tag_id
+        name: label_id
         required: true
         type: string
       produces:
@@ -682,9 +682,9 @@ paths:
             $ref: '#/definitions/e.ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Detach tag by ID from report by ID
-      tags:
-      - tags
+      summary: Detach label by ID from report by ID
+      labels:
+      - labels
 securityDefinitions:
   ApiKeyAuth:
     in: header

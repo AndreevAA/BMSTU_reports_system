@@ -2,11 +2,11 @@ package mapper
 
 import (
 	authMapper "neatly/internal/mapper/account"
+	labelMapper "neatly/internal/mapper/label"
 	reportMapper "neatly/internal/mapper/report"
-	tagMapper "neatly/internal/mapper/tag"
 	"neatly/internal/model/account"
+	"neatly/internal/model/label"
 	"neatly/internal/model/report"
-	"neatly/internal/model/tag"
 	"neatly/pkg/logging"
 )
 
@@ -23,22 +23,22 @@ type Report interface {
 	MapGetAllReportsDTO(ns []report.Report) report.GetAllReportsDTO
 }
 
-type Tag interface {
-	MapCreateTagDTO(dto tag.CreateTagDTO) tag.Tag
-	MapUpdateTagDTO(dto tag.UpdateTagDTO) tag.Tag
-	MapGetAllTagsDTO(tags []tag.Tag) tag.GetAllTagsDTO
+type Label interface {
+	MapCreateLabelDTO(dto label.CreateLabelDTO) label.Label
+	MapUpdateLabelDTO(dto label.UpdateLabelDTO) label.Label
+	MapGetAllLabelsDTO(labels []label.Label) label.GetAllLabelsDTO
 }
 
 type Mapper struct {
 	Account
 	Report
-	Tag
+	Label
 }
 
 func New(l logging.Logger) *Mapper {
 	return &Mapper{
 		Account: authMapper.New(l),
-		Report:    reportMapper.New(l),
-		Tag:     tagMapper.New(l),
+		Report:  reportMapper.New(l),
+		Label:   labelMapper.New(l),
 	}
 }

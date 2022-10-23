@@ -1,12 +1,12 @@
-package tag
+package label
 
 import (
 	"errors"
 	"fmt"
 	"neatly/internal/handlers/middleware"
 	"neatly/internal/mapper"
+	"neatly/internal/model/label"
 	"neatly/internal/model/report"
-	"neatly/internal/model/tag"
 	"neatly/internal/service"
 	"neatly/pkg/e"
 	"neatly/pkg/logging"
@@ -17,60 +17,60 @@ import (
 )
 
 const (
-	apiURLGroup   = "/api"
+	apiURLGroup     = "/api"
 	reportsURLGroup = "/reports"
-	tagsURLGroup  = "/tags"
-	apiVersion    = "1"
+	labelsURLGroup  = "/labels"
+	apiVersion      = "1"
 )
 
 type Handler struct {
 	logger  logging.Logger
-	service service.Tag
-	mapper  mapper.Tag
+	service service.Label
+	mapper  mapper.Label
 }
 
-func NewHandler(logger logging.Logger, service service.Tag, mapper mapper.Tag) *Handler {
+func NewHandler(logger logging.Logger, service service.Label, mapper mapper.Label) *Handler {
 	return &Handler{logger: logger, service: service, mapper: mapper}
 }
 
 func (h *Handler) Register(router *gin.Engine) {
-	tagsGroupName := fmt.Sprintf("%v/v%v%v", apiURLGroup, apiVersion, tagsURLGroup)
-	tagsOnReportGroupName := fmt.Sprintf("%v/v%v%v/:id%v", apiURLGroup, apiVersion, reportsURLGroup, tagsURLGroup)
+	labelsGroupName := fmt.Sprintf("%v/v%v%v", apiURLGroup, apiVersion, labelsURLGroup)
+	labelsOnReportGroupName := fmt.Sprintf("%v/v%v%v/:id%v", apiURLGroup, apiVersion, reportsURLGroup, labelsURLGroup)
 
-	h.logger.Tracef("Register route: %v", tagsGroupName)
-	h.logger.Tracef("Register route: %v", tagsOnReportGroupName)
+	h.logger.Tracef("Register route: %v", labelsGroupName)
+	h.logger.Tracef("Register route: %v", labelsOnReportGroupName)
 
-	tagsGroup := router.Group(tagsGroupName, middleware.Authenticate)
+	labelsGroup := router.Group(labelsGroupName, middleware.Authenticate)
 	{
-		tagsGroup.GET("", h.getAllTags)
-		tagsGroup.GET("/:id", h.getOneTag)
-		tagsGroup.PATCH("/:id", h.updateTag)
-		tagsGroup.DELETE("/:id", h.deleteTag)
+		labelsGroup.GET("", h.getAllLabels)
+		labelsGroup.GET("/:id", h.getOneLabel)
+		labelsGroup.PATCH("/:id", h.updateLabel)
+		labelsGroup.DELETE("/:id", h.deleteLabel)
 	}
 
-	h.logger.Tracef("Register route: %v", tagsOnReportGroupName)
-	tagsOnReportGroup := router.Group(tagsOnReportGroupName, middleware.Authenticate)
+	h.logger.Tracef("Register route: %v", labelsOnReportGroupName)
+	labelsOnReportGroup := router.Group(labelsOnReportGroupName, middleware.Authenticate)
 	{
-		tagsOnReportGroup.GET("", h.getAllTagsOnReport)
-		tagsOnReportGroup.POST("", h.createTag)           // /api/reports/:id/tags/
-		tagsOnReportGroup.DELETE("/:tag_id", h.detachTag) // /api/reports/:id/tags/
+		labelsOnReportGroup.GET("", h.getAllLabelsOnReport)
+		labelsOnReportGroup.POST("", h.createLabel)             // /api/reports/:id/labels/
+		labelsOnReportGroup.DELETE("/:label_id", h.detachLabel) // /api/reports/:id/labels/
 	}
 }
 
-// @Summary Create tag
+// @Summary Create label
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description create tag
+// @Labels labels
+// @Description create label
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
-// @Param dto body tag.CreateTagDTO true "tag info"
+// @Param dto body label.CreateLabelDTO true "label info"
 // @Success 201 {string} string 1
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/reports/{id}/tags [post]
-func (h *Handler) createTag(ctx *gin.Context) {
+// @Router /api/v1/reports/{id}/labels [post]
+func (h *Handler) createLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
@@ -85,8 +85,8 @@ func (h *Handler) createTag(ctx *gin.Context) {
 	}
 
 	var (
-		dto tag.CreateTagDTO
-		t   tag.Tag
+		dto label.CreateLabelDTO
+		t   label.Label
 	)
 
 	if err := ctx.BindJSON(&dto); err != nil {
@@ -95,7 +95,7 @@ func (h *Handler) createTag(ctx *gin.Context) {
 		return
 	}
 
-	t = h.mapper.MapCreateTagDTO(dto)
+	t = h.mapper.MapCreateLabelDTO(dto)
 	err = h.service.Create(userID, reportID, &t)
 
 	if err != nil {
@@ -108,22 +108,22 @@ func (h *Handler) createTag(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, fmt.Sprintf(
-		"%s%s/%v", apiURLGroup, tagsURLGroup, t.ID))
+		"%s%s/%v", apiURLGroup, labelsURLGroup, t.ID))
 }
 
-// @Summary Get all tags on one report
+// @Summary Get all labels on one report
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description get tags for report
+// @Labels labels
+// @Description get labels for report
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
-// @Success 200 {object} tag.GetAllTagsDTO
+// @Success 200 {object} label.GetAllLabelsDTO
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/reports/{id}/tags [get]
-func (h *Handler) getAllTagsOnReport(ctx *gin.Context) {
+// @Router /api/v1/reports/{id}/labels [get]
+func (h *Handler) getAllLabelsOnReport(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
@@ -137,7 +137,7 @@ func (h *Handler) getAllTagsOnReport(ctx *gin.Context) {
 		return
 	}
 
-	tags, err := h.service.GetAllByReport(userID, reportID)
+	labels, err := h.service.GetAllByReport(userID, reportID)
 
 	if err != nil {
 		h.logger.Info(err)
@@ -149,30 +149,30 @@ func (h *Handler) getAllTagsOnReport(ctx *gin.Context) {
 		return
 	}
 
-	dto := h.mapper.MapGetAllTagsDTO(tags)
+	dto := h.mapper.MapGetAllLabelsDTO(labels)
 
 	ctx.JSON(http.StatusOK, dto)
 }
 
-// @Summary Get all tags
+// @Summary Get all labels
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description get tags from user
+// @Labels labels
+// @Description get labels from user
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} tag.GetAllTagsDTO
+// @Success 200 {object} label.GetAllLabelsDTO
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/tags [get]
-func (h *Handler) getAllTags(ctx *gin.Context) {
+// @Router /api/v1/labels [get]
+func (h *Handler) getAllLabels(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
 		return
 	}
 
-	tags, err := h.service.GetAll(userID)
+	labels, err := h.service.GetAll(userID)
 
 	if err != nil {
 		h.logger.Info(err)
@@ -180,42 +180,42 @@ func (h *Handler) getAllTags(ctx *gin.Context) {
 		return
 	}
 
-	dto := h.mapper.MapGetAllTagsDTO(tags)
+	dto := h.mapper.MapGetAllLabelsDTO(labels)
 
 	ctx.JSON(http.StatusOK, dto)
 }
 
-// @Summary Get one tag by ID
+// @Summary Get one label by ID
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description get one tag by ID
+// @Labels labels
+// @Description get one label by ID
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
-// @Success 200 {object} tag.Tag
+// @Success 200 {object} label.Label
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/tags/{id} [get]
-func (h *Handler) getOneTag(ctx *gin.Context) {
+// @Router /api/v1/labels/{id} [get]
+func (h *Handler) getOneLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
 		return
 	}
 
-	tagID, err := strconv.Atoi(ctx.Param("id"))
+	labelID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		h.logger.Info("error while getting id from request")
 		e.NewErrorResponse(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	t, err := h.service.GetOne(userID, tagID)
+	t, err := h.service.GetOne(userID, labelID)
 
 	if err != nil {
 		h.logger.Info(err)
-		if errors.Is(err, &tag.TagNotFoundErr{}) {
+		if errors.Is(err, &label.LabelNotFoundErr{}) {
 			e.NewErrorResponse(ctx, http.StatusNotFound, err)
 			return
 		}
@@ -226,26 +226,26 @@ func (h *Handler) getOneTag(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, t)
 }
 
-// @Summary Update tag by ID
+// @Summary Update label by ID
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description update one tag by ID
+// @Labels labels
+// @Description update one label by ID
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
-// @Param dto body tag.UpdateTagDTO true "tag info"
+// @Param dto body label.UpdateLabelDTO true "label info"
 // @Success 204
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/tags/{id} [patch]
-func (h *Handler) updateTag(ctx *gin.Context) {
+// @Router /api/v1/labels/{id} [patch]
+func (h *Handler) updateLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		return
 	}
 
-	tagID, err := strconv.Atoi(ctx.Param("id"))
+	labelID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		h.logger.Info("error while getting id from request")
 		e.NewErrorResponse(ctx, http.StatusInternalServerError, err)
@@ -253,7 +253,7 @@ func (h *Handler) updateTag(ctx *gin.Context) {
 	}
 
 	var (
-		dto tag.UpdateTagDTO
+		dto label.UpdateLabelDTO
 	)
 	if err := ctx.BindJSON(&dto); err != nil {
 		h.logger.Info(err)
@@ -261,11 +261,11 @@ func (h *Handler) updateTag(ctx *gin.Context) {
 		return
 	}
 
-	t := h.mapper.MapUpdateTagDTO(dto)
-	err = h.service.Update(userID, tagID, t)
+	t := h.mapper.MapUpdateLabelDTO(dto)
+	err = h.service.Update(userID, labelID, t)
 	if err != nil {
 		h.logger.Info(err)
-		if errors.Is(err, &tag.TagNotFoundErr{}) {
+		if errors.Is(err, &label.LabelNotFoundErr{}) {
 			e.NewErrorResponse(ctx, http.StatusNotFound, err)
 			return
 		}
@@ -276,10 +276,10 @@ func (h *Handler) updateTag(ctx *gin.Context) {
 	ctx.Writer.WriteHeader(http.StatusNoContent)
 }
 
-// @Summary Delete one tag by ID
+// @Summary Delete one label by ID
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description delete one tag by ID
+// @Labels labels
+// @Description delete one label by ID
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
@@ -287,26 +287,26 @@ func (h *Handler) updateTag(ctx *gin.Context) {
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/tags/{id} [delete]
-func (h *Handler) deleteTag(ctx *gin.Context) {
+// @Router /api/v1/labels/{id} [delete]
+func (h *Handler) deleteLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
 		return
 	}
 
-	tagID, err := strconv.Atoi(ctx.Param("id"))
+	labelID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		h.logger.Info("error while getting id from request")
 		e.NewErrorResponse(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	err = h.service.Delete(userID, tagID)
+	err = h.service.Delete(userID, labelID)
 
 	if err != nil {
 		h.logger.Info(err)
-		if errors.Is(err, &tag.TagNotFoundErr{}) {
+		if errors.Is(err, &label.LabelNotFoundErr{}) {
 			e.NewErrorResponse(ctx, http.StatusNotFound, err)
 			return
 		}
@@ -317,20 +317,20 @@ func (h *Handler) deleteTag(ctx *gin.Context) {
 	ctx.Writer.WriteHeader(http.StatusNoContent)
 }
 
-// @Summary Detach tag by ID from report by ID
+// @Summary Detach label by ID from report by ID
 // @Security ApiKeyAuth
-// @Tags tags
-// @Description detach tag by ID from report by ID
+// @Labels labels
+// @Description detach label by ID from report by ID
 // @Accept  json
 // @Produce  json
 // @Param   id  path  string  true  "id"
-// @Param   tag_id  path  string  true  "tag id"
+// @Param   label_id  path  string  true  "label id"
 // @Success 200 {integer} integer 1
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/tags/{id}/tags/{tag_id} [delete]
-func (h *Handler) detachTag(ctx *gin.Context) {
+// @Router /api/v1/labels/{id}/labels/{label_id} [delete]
+func (h *Handler) detachLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
 		h.logger.Info(err)
@@ -344,18 +344,18 @@ func (h *Handler) detachTag(ctx *gin.Context) {
 		return
 	}
 
-	tagID, err := strconv.Atoi(ctx.Param("tag_id"))
+	labelID, err := strconv.Atoi(ctx.Param("label_id"))
 	if err != nil {
 		h.logger.Info("error while getting id from request")
 		e.NewErrorResponse(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	err = h.service.Detach(userID, tagID, reportID)
+	err = h.service.Detach(userID, labelID, reportID)
 
 	if err != nil {
 		h.logger.Info(err)
-		if errors.Is(err, &tag.TagNotFoundErr{}) {
+		if errors.Is(err, &label.LabelNotFoundErr{}) {
 			e.NewErrorResponse(ctx, http.StatusNotFound, err)
 			return
 		}

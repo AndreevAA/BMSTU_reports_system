@@ -18,12 +18,12 @@ import (
 )
 
 const (
-	tagsURLGroup  = "/tags"
+	labelsURLGroup  = "/labels"
 	reportsURLGroup = "/reports"
-	apiURLGroup   = "/api"
-	apiVersion    = "1"
-	searchURL     = "/search"
-	tagSearchKey  = "tag"
+	apiURLGroup     = "/api"
+	apiVersion      = "1"
+	searchURL       = "/search"
+	labelSearchKey  = "label"
 )
 
 type Handler struct {
@@ -53,7 +53,7 @@ func (h *Handler) Register(router *gin.Engine) {
 
 // @Summary Create report
 // @Security ApiKeyAuth
-// @Tags reports
+// @Labels reports
 // @Description create report
 // @Accept  json
 // @Produce  json
@@ -93,13 +93,13 @@ func (h *Handler) createReport(ctx *gin.Context) {
 		"%s%s/%v", apiURLGroup, reportsURLGroup, n.ID))
 }
 
-// @Summary Get all reports from user filter by tag
+// @Summary Get all reports from user filter by label
 // @Security ApiKeyAuth
-// @Tags reports
+// @Labels reports
 // @Description create report
 // @Accept  json
 // @Produce  json
-// @Param   tag query  string  false  "reports search by tag"
+// @Param   label query  string  false  "reports search by label"
 // @Success 200 {object} report.GetAllReportsDTO
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
@@ -119,7 +119,7 @@ func (h *Handler) getAllReports(ctx *gin.Context) {
 	var ns []report.Report
 
 	keys := ctx.Request.URL.Query()
-	values := keys[tagSearchKey]
+	values := keys[labelSearchKey]
 	if values == nil {
 		ns, err = h.service.GetAll(userID)
 		if err != nil {
@@ -131,7 +131,7 @@ func (h *Handler) getAllReports(ctx *gin.Context) {
 			return
 		}
 	} else {
-		ns, err = h.service.FindByTags(userID, values)
+		ns, err = h.service.FindByLabels(userID, values)
 		if err != nil {
 			h.logger.Info(err)
 			e.NewErrorResponse(ctx, http.StatusInternalServerError, err)
@@ -146,7 +146,7 @@ func (h *Handler) getAllReports(ctx *gin.Context) {
 
 // @Summary Get Report By Id
 // @Security ApiKeyAuth
-// @Tags reports
+// @Labels reports
 // @Description get report by id
 // @ID get-report-by-id
 // @Accept  json
@@ -185,7 +185,7 @@ func (h *Handler) getOneReport(ctx *gin.Context) {
 
 // @Summary Update Report
 // @Security ApiKeyAuth
-// @Tags reports
+// @Labels reports
 // @Description update report
 // @ID update-report
 // @Accept  json
@@ -253,7 +253,7 @@ func (h *Handler) updateReport(ctx *gin.Context) {
 
 // @Summary Delete Report
 // @Security ApiKeyAuth
-// @Tags reports
+// @Labels reports
 // @Description delete report
 // @ID delete-report
 // @Accept  json

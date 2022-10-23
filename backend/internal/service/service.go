@@ -2,12 +2,12 @@ package service
 
 import (
 	"neatly/internal/model/account"
+	"neatly/internal/model/label"
 	"neatly/internal/model/report"
-	"neatly/internal/model/tag"
 	"neatly/internal/repository"
 	authService "neatly/internal/service/account"
+	labelService "neatly/internal/service/label"
 	reportService "neatly/internal/service/report"
-	tagService "neatly/internal/service/tag"
 	"neatly/pkg/logging"
 )
 
@@ -23,29 +23,29 @@ type Report interface {
 	GetOne(userID, reportID int) (report.Report, error)
 	Delete(userID, reportID int) error
 	Update(userID int, n report.Report, needBodyUpdate bool) error
-	FindByTags(userID int, tagNames []string) ([]report.Report, error)
+	FindByLabels(userID int, labelNames []string) ([]report.Report, error)
 }
 
-type Tag interface {
-	Create(userID, reportID int, tag *tag.Tag) error
-	GetAll(userID int) ([]tag.Tag, error)
-	GetAllByReport(userID, reportID int) ([]tag.Tag, error)
-	GetOne(userID, tagID int) (tag.Tag, error)
-	Delete(userID, tagID int) error
-	Update(userID, tagID int, t tag.Tag) error
-	Detach(userID, tagID, reportID int) error
+type Label interface {
+	Create(userID, reportID int, label *label.Label) error
+	GetAll(userID int) ([]label.Label, error)
+	GetAllByReport(userID, reportID int) ([]label.Label, error)
+	GetOne(userID, labelID int) (label.Label, error)
+	Delete(userID, labelID int) error
+	Update(userID, labelID int, t label.Label) error
+	Detach(userID, labelID, reportID int) error
 }
 
 type Service struct {
 	Account
 	Report
-	Tag
+	Label
 }
 
 func New(repo *repository.Repository, logger logging.Logger) *Service {
 	return &Service{
 		Account: authService.NewService(repo.Account),
-		Report:    reportService.NewService(repo.Report, repo.Tag, logger),
-		Tag:     tagService.NewService(repo.Tag, repo.Report, logger),
+		Report:  reportService.NewService(repo.Report, repo.Label, logger),
+		Label:   labelService.NewService(repo.Label, repo.Report, logger),
 	}
 }

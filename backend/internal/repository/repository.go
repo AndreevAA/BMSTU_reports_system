@@ -2,8 +2,8 @@ package repository
 
 import (
 	"neatly/internal/model/account"
+	"neatly/internal/model/label"
 	"neatly/internal/model/report"
-	"neatly/internal/model/tag"
 	"neatly/internal/repository/psql"
 	"neatly/pkg/client/psqlclient"
 	"neatly/pkg/logging"
@@ -23,27 +23,27 @@ type Report interface {
 	Update(userID int, n report.Report) error
 }
 
-type Tag interface {
-	Create(userID int, reportID int, t *tag.Tag) error
-	GetAll(userID int) ([]tag.Tag, error)
-	GetAllByReport(userID, reportID int) ([]tag.Tag, error)
-	GetOne(userID, tagID int) (tag.Tag, error)
-	Delete(userID, tagID int) error
-	Detach(userID, tagID, reportID int) error
-	Assign(tagID, reportID, userID int) error
-	Update(userID, tagID int, t tag.Tag) error
+type Label interface {
+	Create(userID int, reportID int, t *label.Label) error
+	GetAll(userID int) ([]label.Label, error)
+	GetAllByReport(userID, reportID int) ([]label.Label, error)
+	GetOne(userID, labelID int) (label.Label, error)
+	Delete(userID, labelID int) error
+	Detach(userID, labelID, reportID int) error
+	Assign(labelID, reportID, userID int) error
+	Update(userID, labelID int, t label.Label) error
 }
 
 type Repository struct {
 	Account
 	Report
-	Tag
+	Label
 }
 
 func New(client *psqlclient.Client, logger logging.Logger) *Repository {
 	return &Repository{
 		Account: psql.NewAuthPostgres(client, logger),
-		Report:    psql.NewReportPostgres(client, logger),
-		Tag:     psql.NewTagPostgres(client, logger),
+		Report:  psql.NewReportPostgres(client, logger),
+		Label:   psql.NewLabelPostgres(client, logger),
 	}
 }

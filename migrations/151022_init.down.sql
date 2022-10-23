@@ -6,8 +6,8 @@ DROP TABLE reports_body;
 
 DROP TABLE users_reports;
 
-DROP TABLE tags;
+DROP TABLE labels;
 
-DROP TABLE tags_reports;
+DROP TABLE labels_reports;
 
-DROP TABLE users_tags;
+DROP TABLE users_labels;

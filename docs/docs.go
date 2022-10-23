@@ -26,7 +26,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "account"
                 ],
                 "summary": "getAccount",
@@ -71,7 +71,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "account"
                 ],
                 "summary": "Login",
@@ -118,7 +118,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "account"
                 ],
                 "summary": "Register",
@@ -170,15 +170,15 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "reports"
                 ],
-                "summary": "Get all reports from user filter by tag",
+                "summary": "Get all reports from user filter by label",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "reports search by tag",
-                        "name": "tag",
+                        "description": "reports search by label",
+                        "name": "label",
                         "in": "query"
                     }
                 ],
@@ -228,7 +228,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "reports"
                 ],
                 "summary": "Create report",
@@ -291,7 +291,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "reports"
                 ],
                 "summary": "Get Report By Id",
@@ -339,7 +339,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "reports"
                 ],
                 "summary": "Delete Report",
@@ -384,7 +384,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
+                "labels": [
                     "reports"
                 ],
                 "summary": "Update Report",
@@ -426,24 +426,24 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/reports/{id}/tags": {
+        "/api/v1/reports/{id}/labels": {
             "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "get tags for report",
+                "description": "get labels for report",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Get all tags on one report",
+                "summary": "Get all labels on one report",
                 "parameters": [
                     {
                         "type": "string",
@@ -457,7 +457,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.GetAllTagsDTO"
+                            "$ref": "#/definitions/label.GetAllLabelsDTO"
                         }
                     },
                     "400": {
@@ -492,17 +492,17 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "create tag",
+                "description": "create label",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Create tag",
+                "summary": "Create label",
                 "parameters": [
                     {
                         "type": "string",
@@ -512,12 +512,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "tag info",
+                        "description": "label info",
                         "name": "dto",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.CreateTagDTO"
+                            "$ref": "#/definitions/label.CreateLabelDTO"
                         }
                     }
                 ],
@@ -555,29 +555,29 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/tags": {
+        "/api/v1/labels": {
             "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "get tags from user",
+                "description": "get labels from user",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Get all tags",
+                "summary": "Get all labels",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.GetAllTagsDTO"
+                            "$ref": "#/definitions/label.GetAllLabelsDTO"
                         }
                     },
                     "400": {
@@ -607,24 +607,24 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/tags/{id}": {
+        "/api/v1/labels/{id}": {
             "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "get one tag by ID",
+                "description": "get one label by ID",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Get one tag by ID",
+                "summary": "Get one label by ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -638,7 +638,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/tag.Tag"
+                            "$ref": "#/definitions/label.Label"
                         }
                     },
                     "400": {
@@ -673,17 +673,17 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "delete one tag by ID",
+                "description": "delete one label by ID",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Delete one tag by ID",
+                "summary": "Delete one label by ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -732,17 +732,17 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "update one tag by ID",
+                "description": "update one label by ID",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Update tag by ID",
+                "summary": "Update label by ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -752,12 +752,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "tag info",
+                        "description": "label info",
                         "name": "dto",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/tag.UpdateTagDTO"
+                            "$ref": "#/definitions/label.UpdateLabelDTO"
                         }
                     }
                 ],
@@ -792,24 +792,24 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/tags/{id}/tags/{tag_id}": {
+        "/api/v1/labels/{id}/labels/{label_id}": {
             "delete": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "detach tag by ID from report by ID",
+                "description": "detach label by ID from report by ID",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "tags"
+                "labels": [
+                    "labels"
                 ],
-                "summary": "Detach tag by ID from report by ID",
+                "summary": "Detach label by ID from report by ID",
                 "parameters": [
                     {
                         "type": "string",
@@ -820,8 +820,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "tag id",
-                        "name": "tag_id",
+                        "description": "label id",
+                        "name": "label_id",
                         "in": "path",
                         "required": true
                     }
@@ -984,11 +984,11 @@ const docTemplate = `{
                 "shortBody": {
                     "type": "string"
                 },
-                "tags": {
-                    "description": "[]tag.Tag",
+                "labels": {
+                    "description": "[]label.Label",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/tag.Tag"
+                        "$ref": "#/definitions/label.Label"
                     }
                 }
             }
@@ -1010,7 +1010,7 @@ const docTemplate = `{
                 }
             }
         },
-        "tag.CreateTagDTO": {
+        "label.CreateLabelDTO": {
             "type": "object",
             "required": [
                 "department",
@@ -1025,18 +1025,18 @@ const docTemplate = `{
                 }
             }
         },
-        "tag.GetAllTagsDTO": {
+        "label.GetAllLabelsDTO": {
             "type": "object",
             "properties": {
-                "tags": {
+                "labels": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/tag.Tag"
+                        "$ref": "#/definitions/label.Label"
                     }
                 }
             }
         },
-        "tag.Tag": {
+        "label.Label": {
             "type": "object",
             "required": [
                 "department",
@@ -1054,7 +1054,7 @@ const docTemplate = `{
                 }
             }
         },
-        "tag.UpdateTagDTO": {
+        "label.UpdateLabelDTO": {
             "type": "object",
             "properties": {
                 "department": {

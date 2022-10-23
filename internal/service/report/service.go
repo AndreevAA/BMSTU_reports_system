@@ -8,12 +8,12 @@ import (
 
 type Service struct {
 	reportsRepository repository.Report
-	tagsRepository  repository.Tag
-	logger          logging.Logger
+	labelsRepository  repository.Label
+	logger            logging.Logger
 }
 
-func NewService(reportsRepository repository.Report, tagsRepository repository.Tag, logger logging.Logger) *Service {
-	return &Service{reportsRepository: reportsRepository, tagsRepository: tagsRepository, logger: logger}
+func NewService(reportsRepository repository.Report, labelsRepository repository.Label, logger logging.Logger) *Service {
+	return &Service{reportsRepository: reportsRepository, labelsRepository: labelsRepository, logger: logger}
 }
 
 func (s *Service) Create(userID int, n *report.Report) error {
@@ -33,11 +33,11 @@ func (s *Service) GetAll(userID int) ([]report.Report, error) {
 
 	for i := 0; i < len(reports); i++ {
 		reportID := reports[i].ID
-		tags, err := s.tagsRepository.GetAllByReport(userID, reportID)
+		labels, err := s.labelsRepository.GetAllByReport(userID, reportID)
 		if err != nil {
 			return []report.Report{}, err
 		}
-		reports[i].Tags = tags
+		reports[i].Labels = labels
 	}
 
 	return reports, nil
@@ -49,11 +49,11 @@ func (s *Service) GetOne(userID, reportID int) (report.Report, error) {
 		return n, err
 	}
 
-	tags, err := s.tagsRepository.GetAllByReport(userID, n.ID)
+	labels, err := s.labelsRepository.GetAllByReport(userID, n.ID)
 	if err != nil {
 		return n, err
 	}
-	n.Tags = tags
+	n.Labels = labels
 
 	return n, nil
 }
@@ -79,27 +79,27 @@ func (s *Service) Update(userID int, n report.Report, needBodyUpdate bool) error
 	return s.reportsRepository.Update(userID, n)
 }
 
-func (s *Service) FindByTags(userID int, tagNames []string) ([]report.Report, error) {
+func (s *Service) FindByLabels(userID int, labelNames []string) ([]report.Report, error) {
 	ns, err := s.reportsRepository.GetAll(userID)
 	if err != nil {
 		return ns, err
 	}
 
 	var (
-		reportsWithAllTags []report.Report
+		reportsWithAllLabels []report.Report
 	)
 
 	for _, n := range ns {
-		n.Tags, err = s.tagsRepository.GetAllByReport(userID, n.ID)
+		n.Labels, err = s.labelsRepository.GetAllByReport(userID, n.ID)
 		if err != nil {
 			return ns, err
 		}
 
-		s.logger.Infof("Found tags from report %v: %v", n.ID, n.Tags)
-		if n.HasEveryTag(tagNames) {
-			reportsWithAllTags = append(reportsWithAllTags, n)
+		s.logger.Infof("Found labels from report %v: %v", n.ID, n.Labels)
+		if n.HasEveryLabel(labelNames) {
+			reportsWithAllLabels = append(reportsWithAllLabels, n)
 		}
 	}
 
-	return reportsWithAllTags, nil
+	return reportsWithAllLabels, nil
 }

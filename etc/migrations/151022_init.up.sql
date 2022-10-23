@@ -25,20 +25,20 @@ CREATE TABLE users_reports (
     reports_id INT REFERENCES reports(id) ON DELETE CASCADE NOT NULL
 );
 
-CREATE TABLE tags (
+CREATE TABLE labels (
     id SERIAL NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
     department VARCHAR(6) NOT NULL
 );
 
-CREATE TABLE tags_reports (
+CREATE TABLE labels_reports (
     id SERIAL NOT NULL UNIQUE,
-    tags_id INT REFERENCES tags(id) ON DELETE CASCADE NOT NULL,
+    labels_id INT REFERENCES labels(id) ON DELETE CASCADE NOT NULL,
     reports_id INT REFERENCES reports(id) ON DELETE CASCADE NOT NULL
 );
 
-CREATE TABLE users_tags (
+CREATE TABLE users_labels (
     id SERIAL NOT NULL UNIQUE,
     users_id INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-    tags_id INT REFERENCES tags(id) ON DELETE CASCADE NOT NULL
+    labels_id INT REFERENCES labels(id) ON DELETE CASCADE NOT NULL
 );
