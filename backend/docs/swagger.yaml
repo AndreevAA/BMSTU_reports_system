@@ -1,0 +1,693 @@
+basePath: /
+definitions:
+  account.GetAccountDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+    type: object
+  account.LoginAccountDTO:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  account.RegisterAccountDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  account.WithTokenDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  e.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  report.CreateReportDTO:
+    properties:
+      body:
+        type: string
+      department:
+        type: string
+      header:
+        type: string
+    required:
+    - department
+    - header
+    type: object
+  report.GetAllReportsDTO:
+    properties:
+      reports:
+        items:
+          $ref: '#/definitions/report.Report'
+        type: array
+    type: object
+  report.Report:
+    properties:
+      body:
+        type: string
+      department:
+        type: string
+      edited:
+        type: string
+      header:
+        type: string
+      id:
+        type: integer
+      shortBody:
+        type: string
+      tags:
+        description: '[]tag.Tag'
+        items:
+          $ref: '#/definitions/tag.Tag'
+        type: array
+    type: object
+  report.UpdateReportDTO:
+    properties:
+      body:
+        type: string
+      department:
+        type: string
+      header:
+        type: string
+      id:
+        type: integer
+    type: object
+  tag.CreateTagDTO:
+    properties:
+      department:
+        type: string
+      name:
+        type: string
+    required:
+    - department
+    - name
+    type: object
+  tag.GetAllTagsDTO:
+    properties:
+      tags:
+        items:
+          $ref: '#/definitions/tag.Tag'
+        type: array
+    type: object
+  tag.Tag:
+    properties:
+      department:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - department
+    - name
+    type: object
+  tag.UpdateTagDTO:
+    properties:
+      department:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API Server for reports-taking applications
+  termsOfService: http://swagger.io/terms/
+  title: Neat.ly API
+  version: "1.0"
+paths:
+  /api/v1/accounts/:id:
+    get:
+      consumes:
+      - application/json
+      description: get account
+      operationId: get-account
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account.GetAccountDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      summary: getAccount
+      tags:
+      - account
+  /api/v1/accounts/login:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/account.LoginAccountDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/account.WithTokenDTO'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      summary: Login
+      tags:
+      - account
+  /api/v1/accounts/register:
+    post:
+      consumes:
+      - application/json
+      description: create account
+      operationId: create-account
+      parameters:
+      - description: account info
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/account.RegisterAccountDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      summary: Register
+      tags:
+      - account
+  /api/v1/reports:
+    get:
+      consumes:
+      - application/json
+      description: create report
+      parameters:
+      - description: reports search by tag
+        in: query
+        name: tag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/report.GetAllReportsDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all reports from user filter by tag
+      tags:
+      - reports
+    post:
+      consumes:
+      - application/json
+      description: create report
+      parameters:
+      - description: report content
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/report.CreateReportDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create report
+      tags:
+      - reports
+  /api/v1/reports/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete report
+      operationId: delete-report
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Report
+      tags:
+      - reports
+    get:
+      consumes:
+      - application/json
+      description: get report by id
+      operationId: get-report-by-id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/report.Report'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Report By Id
+      tags:
+      - reports
+    patch:
+      consumes:
+      - application/json
+      description: update report
+      operationId: update-report
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: report content
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/report.UpdateReportDTO'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Report
+      tags:
+      - reports
+  /api/v1/reports/{id}/tags:
+    get:
+      consumes:
+      - application/json
+      description: get tags for report
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.GetAllTagsDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all tags on one report
+      tags:
+      - tags
+    post:
+      consumes:
+      - application/json
+      description: create tag
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: tag info
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/tag.CreateTagDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create tag
+      tags:
+      - tags
+  /api/v1/tags:
+    get:
+      consumes:
+      - application/json
+      description: get tags from user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.GetAllTagsDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all tags
+      tags:
+      - tags
+  /api/v1/tags/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete one tag by ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete one tag by ID
+      tags:
+      - tags
+    get:
+      consumes:
+      - application/json
+      description: get one tag by ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tag.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get one tag by ID
+      tags:
+      - tags
+    patch:
+      consumes:
+      - application/json
+      description: update one tag by ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: tag info
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/tag.UpdateTagDTO'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update tag by ID
+      tags:
+      - tags
+  /api/v1/tags/{id}/tags/{tag_id}:
+    delete:
+      consumes:
+      - application/json
+      description: detach tag by ID from report by ID
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: tag id
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/e.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Detach tag by ID from report by ID
+      tags:
+      - tags
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
