@@ -1,48 +1,48 @@
 version: "3.8"
 
 services:
-  neatly-postgres:
+  reports_system-postgres:
       image: postgres:alpine
       ports:
         - 5432:5432
       environment:
-        - POSTGRES_USER=neatly
-        - POSTGRES_PASSWORD=neatly
+        - POSTGRES_USER=reports_system
+        - POSTGRES_PASSWORD=reports_system
         - PGDATA=/pgdata
-        - POSTGRES_DB=neatly
+        - POSTGRES_DB=reports_system
 
   backend1:
     build:
       context: ./backend
-    command: ./wait-for-postgres.sh neatly-postgres ./app
+    command: ./wait-for-postgres.sh reports_system-postgres ./app
     container_name: backend1
     restart: on-failure
     ports:
       - "8081:8080"
     depends_on:
-      - neatly-postgres
+      - reports_system-postgres
       
   backend2:
     build:
       context: ./backend
-    command: ./wait-for-postgres.sh neatly-postgres ./app
+    command: ./wait-for-postgres.sh reports_system-postgres ./app
     container_name: backend2
     restart: on-failure
     ports:
       - "8082:8080"
     depends_on:
-      - neatly-postgres
+      - reports_system-postgres
 
   backend3:
     build:
       context: ./backend
-    command: ./wait-for-postgres.sh neatly-postgres ./app
+    command: ./wait-for-postgres.sh reports_system-postgres ./app
     container_name: backend3
     restart: on-failure
     ports:
       - "8083:8080"
     depends_on:
-      - neatly-postgres
+      - reports_system-postgres
 
   nginx:
     image: nginx

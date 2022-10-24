@@ -1,7 +1,7 @@
 package report
 
 import (
-	"neatly/internal/model/label"
+	"reports_system/internal/model/label"
 	"strings"
 	"time"
 )

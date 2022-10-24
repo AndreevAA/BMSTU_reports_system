@@ -1,10 +1,10 @@
 package account
 
 import (
-	"neatly/internal/model/account"
-	"neatly/internal/repository"
-	"neatly/pkg/jwt"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/account"
+	"reports_system/internal/repository"
+	"reports_system/pkg/jwt"
+	"reports_system/pkg/logging"
 )
 
 type Service struct {

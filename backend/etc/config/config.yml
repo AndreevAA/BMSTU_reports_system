@@ -4,11 +4,11 @@ listen:
   bind_ip: "localhost"
   port: "8080"
 db:
-  host: "neatly-postgres"
+  host: "reports_system-postgres"
   port: "5432"
-  user: "neatly"
-  password: "neatly"
-  dbname: "neatly"
+  user: "reports_system"
+  password: "reports_system"
+  dbname: "reports_system"
   ssl_mode: "disable"
   migrations_path: "etc/migrations"
 jwt:

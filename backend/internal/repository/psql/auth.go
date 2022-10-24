@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/jmoiron/sqlx"
-	"neatly/internal/model/account"
-	"neatly/pkg/client/psqlclient"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/account"
+	"reports_system/pkg/client/psqlclient"
+	"reports_system/pkg/logging"
 )
 
 const (

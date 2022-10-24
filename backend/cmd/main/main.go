@@ -1,17 +1,17 @@
 package main
 
 import (
-	"neatly/cmd/server"
-	_ "neatly/docs"
-	"neatly/internal/handlers/account"
-	"neatly/internal/handlers/label"
-	"neatly/internal/handlers/report"
-	"neatly/internal/mapper"
-	"neatly/internal/repository"
-	"neatly/internal/service"
-	"neatly/internal/session"
-	"neatly/pkg/client/psqlclient"
-	"neatly/pkg/logging"
+	"reports_system/cmd/server"
+	_ "reports_system/docs"
+	"reports_system/internal/handlers/account"
+	"reports_system/internal/handlers/label"
+	"reports_system/internal/handlers/report"
+	"reports_system/internal/mapper"
+	"reports_system/internal/repository"
+	"reports_system/internal/service"
+	"reports_system/internal/session"
+	"reports_system/pkg/client/psqlclient"
+	"reports_system/pkg/logging"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"

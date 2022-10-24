@@ -3,10 +3,10 @@ package middleware
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"neatly/pkg/e"
-	"neatly/pkg/jwt"
-	"neatly/pkg/logging"
 	"net/http"
+	"reports_system/pkg/e"
+	"reports_system/pkg/jwt"
+	"reports_system/pkg/logging"
 	"strings"
 )
 

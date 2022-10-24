@@ -2,9 +2,9 @@ package label
 
 import (
 	"errors"
-	"neatly/internal/model/label"
-	"neatly/internal/repository"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/label"
+	"reports_system/internal/repository"
+	"reports_system/pkg/logging"
 	"strings"
 )
 

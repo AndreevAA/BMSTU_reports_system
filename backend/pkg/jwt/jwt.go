@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/cristalhq/jwt/v3"
-	"neatly/internal/session"
+	"reports_system/internal/session"
 	"time"
 )
 

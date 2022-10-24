@@ -1,14 +1,14 @@
 package service
 
 import (
-	"neatly/internal/model/account"
-	"neatly/internal/model/label"
-	"neatly/internal/model/report"
-	"neatly/internal/repository"
-	authService "neatly/internal/service/account"
-	labelService "neatly/internal/service/label"
-	reportService "neatly/internal/service/report"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/account"
+	"reports_system/internal/model/label"
+	"reports_system/internal/model/report"
+	"reports_system/internal/repository"
+	authService "reports_system/internal/service/account"
+	labelService "reports_system/internal/service/label"
+	reportService "reports_system/internal/service/report"
+	"reports_system/pkg/logging"
 )
 
 type Account interface {

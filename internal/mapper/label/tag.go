@@ -1,8 +1,8 @@
 package label
 
 import (
-	"neatly/internal/model/label"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/label"
+	"reports_system/pkg/logging"
 )
 
 type mapper struct {

@@ -2,9 +2,9 @@ package shutdown
 
 import (
 	"io"
-	"neatly/pkg/logging"
 	"os"
 	"os/signal"
+	"reports_system/pkg/logging"
 )
 
 func Graceful(signals []os.Signal, closeItems ...io.Closer) {

@@ -3,9 +3,9 @@ package server
 import (
 	"errors"
 	"fmt"
-	"neatly/internal/session"
-	"neatly/pkg/logging"
-	"neatly/pkg/shutdown"
+	"reports_system/internal/session"
+	"reports_system/pkg/logging"
+	"reports_system/pkg/shutdown"
 	"net"
 	"net/http"
 	"os"

@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/jmoiron/sqlx"
-	"neatly/internal/model/label"
-	"neatly/internal/model/report"
-	"neatly/pkg/client/psqlclient"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/label"
+	"reports_system/internal/model/report"
+	"reports_system/pkg/client/psqlclient"
+	"reports_system/pkg/logging"
 )
 
 const (

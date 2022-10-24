@@ -4,8 +4,8 @@ import (
 	"fmt"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
-	"neatly/internal/session"
-	"neatly/pkg/logging"
+	"reports_system/internal/session"
+	"reports_system/pkg/logging"
 )
 
 type Client struct {

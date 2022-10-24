@@ -1,13 +1,13 @@
 package mapper
 
 import (
-	authMapper "neatly/internal/mapper/account"
-	labelMapper "neatly/internal/mapper/label"
-	reportMapper "neatly/internal/mapper/report"
-	"neatly/internal/model/account"
-	"neatly/internal/model/label"
-	"neatly/internal/model/report"
-	"neatly/pkg/logging"
+	authMapper "reports_system/internal/mapper/account"
+	labelMapper "reports_system/internal/mapper/label"
+	reportMapper "reports_system/internal/mapper/report"
+	"reports_system/internal/model/account"
+	"reports_system/internal/model/label"
+	"reports_system/internal/model/report"
+	"reports_system/pkg/logging"
 )
 
 type Account interface {

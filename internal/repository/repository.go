@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"neatly/internal/model/account"
-	"neatly/internal/model/label"
-	"neatly/internal/model/report"
-	"neatly/internal/repository/psql"
-	"neatly/pkg/client/psqlclient"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/account"
+	"reports_system/internal/model/label"
+	"reports_system/internal/model/report"
+	"reports_system/internal/repository/psql"
+	"reports_system/pkg/client/psqlclient"
+	"reports_system/pkg/logging"
 )
 
 type Account interface {

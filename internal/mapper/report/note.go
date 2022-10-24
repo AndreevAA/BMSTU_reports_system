@@ -1,8 +1,8 @@
 package report
 
 import (
-	"neatly/internal/model/report"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/report"
+	"reports_system/pkg/logging"
 )
 
 type mapper struct {

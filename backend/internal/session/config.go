@@ -2,7 +2,7 @@ package session
 
 import (
 	"github.com/ilyakaznacheev/cleanenv"
-	"neatly/pkg/logging"
+	"reports_system/pkg/logging"
 	"sync"
 )
 

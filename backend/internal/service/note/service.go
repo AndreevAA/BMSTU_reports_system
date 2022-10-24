@@ -1,9 +1,9 @@
 package report
 
 import (
-	"neatly/internal/model/report"
-	"neatly/internal/repository"
-	"neatly/pkg/logging"
+	"reports_system/internal/model/report"
+	"reports_system/internal/repository"
+	"reports_system/pkg/logging"
 )
 
 type Service struct {

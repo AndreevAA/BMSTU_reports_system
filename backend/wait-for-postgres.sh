@@ -6,7 +6,7 @@ set -e
 host="$1"
 shift
   
-until PGPASSWORD="neatly" psql -h "$host" -U "neatly" -c '\q'; do
+until PGPASSWORD="reports_system" psql -h "$host" -U "reports_system" -c '\q'; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
 done
