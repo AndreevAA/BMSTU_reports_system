@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "API Server for reports-taking applications",
-        "title": "Neat.ly API",
+        "title": "RS",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {},
         "version": "1.0"
@@ -19,7 +19,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "getAccount",
@@ -64,7 +64,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "Login",
@@ -111,7 +111,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "Register",
@@ -163,7 +163,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Get all reports from user filter by label",
@@ -221,7 +221,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Create report",
@@ -284,7 +284,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Get Report By Id",
@@ -332,7 +332,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Delete Report",
@@ -377,7 +377,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Update Report",
@@ -433,7 +433,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get all labels on one report",
@@ -492,7 +492,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Create label",
@@ -562,7 +562,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get all labels",
@@ -614,7 +614,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get one label by ID",
@@ -673,7 +673,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Delete one label by ID",
@@ -732,7 +732,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Update label by ID",
@@ -799,7 +799,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Detach label by ID from report by ID",

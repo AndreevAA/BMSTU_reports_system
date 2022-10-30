@@ -19,7 +19,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title Neat.ly API
+// @title RS
 // @version 1.0
 // @description API Server for reports-taking applications
 // @termsOfService  http://swagger.io/terms/

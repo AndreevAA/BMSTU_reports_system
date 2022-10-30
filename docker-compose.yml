@@ -4,10 +4,10 @@ services:
   reports_system-postgres:
       image: postgres:alpine
       ports:
-        - 5432:5432
+        - 5433:5432
       environment:
-        - POSTGRES_USER=reports_system
-        - POSTGRES_PASSWORD=reports_system
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=qwerty
         - PGDATA=/pgdata
         - POSTGRES_DB=reports_system
 
@@ -21,7 +21,7 @@ services:
       - "8081:8080"
     depends_on:
       - reports_system-postgres
-      
+
   backend2:
     build:
       context: ./backend
@@ -44,10 +44,21 @@ services:
     depends_on:
       - reports_system-postgres
 
-  nginx:
-    image: nginx
+  backend_mirror:
+    build:
+      context: ./backend
+    command: ./wait-for-postgres.sh reports_system-postgres ./app etc/config/mirror.yml
+    container_name: backend_mirror
+    restart: on-failure
     ports:
-      - "8080:8080"
+      - "8084:8080"
+    depends_on:
+      - reports_system-postgres
+
+  nginx:
+    image: byjg/nginx-extras
+    ports:
+      - "8000:8080"
     expose:
       - "8080"
     volumes:
@@ -59,6 +70,7 @@ services:
       - "backend2:backend2"
       - "backend3:backend3"
       - "pgadmin:pgadmin"
+      - "backend_mirror:backend_mirror"
 
 
   pgadmin:

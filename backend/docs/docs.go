@@ -26,7 +26,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "getAccount",
@@ -71,7 +71,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "Login",
@@ -118,7 +118,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "account"
                 ],
                 "summary": "Register",
@@ -170,7 +170,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Get all reports from user filter by label",
@@ -228,7 +228,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Create report",
@@ -291,7 +291,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Get Report By Id",
@@ -339,7 +339,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Delete Report",
@@ -384,7 +384,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "reports"
                 ],
                 "summary": "Update Report",
@@ -440,7 +440,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get all labels on one report",
@@ -499,7 +499,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Create label",
@@ -569,7 +569,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get all labels",
@@ -621,7 +621,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Get one label by ID",
@@ -680,7 +680,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Delete one label by ID",
@@ -739,7 +739,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Update label by ID",
@@ -806,7 +806,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "labels": [
+                "tags": [
                     "labels"
                 ],
                 "summary": "Detach label by ID from report by ID",
@@ -1081,7 +1081,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Neat.ly API",
+	Title:            "RS",
 	Description:      "API Server for reports-taking applications",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

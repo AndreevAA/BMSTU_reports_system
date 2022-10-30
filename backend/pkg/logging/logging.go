@@ -2,13 +2,12 @@ package logging
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"os"
 	"path"
 	"runtime"
-
-	"github.com/sirupsen/logrus"
 )
 
 type writerHook struct {
@@ -53,7 +52,7 @@ func Init() {
 			filename := path.Base(f.File)
 			return fmt.Sprintf("%s:%d", filename, f.Line), fmt.Sprintf("%s()", f.Function)
 		},
-		DisableDepartments: false,
+		//DisableDepartments: false,
 		FullTimestamp: true,
 	}
 

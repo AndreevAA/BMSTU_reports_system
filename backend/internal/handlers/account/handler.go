@@ -50,7 +50,7 @@ func (h *Handler) Register(router *gin.Engine) {
 }
 
 // @Summary Register
-// @Labels account
+// @Tags account
 // @Description create account
 // @ID create-account
 // @Accept  json
@@ -96,7 +96,7 @@ func (h *Handler) register(ctx *gin.Context) {
 }
 
 // @Summary getAccount
-// @Labels account
+// @Tags account
 // @Description get account
 // @ID get-account
 // @Accept  json
@@ -138,7 +138,7 @@ func (h *Handler) getAccount(ctx *gin.Context) {
 }
 
 // @Summary Login
-// @Labels account
+// @Tags account
 // @Description login
 // @ID login
 // @Accept  json

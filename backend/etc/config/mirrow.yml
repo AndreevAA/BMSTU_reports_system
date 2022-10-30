@@ -1,0 +1,16 @@
+is_debug: true
+listen:
+  bind_ip: "localhost"
+  port: "8080"
+db:
+  host: "reports_system-postgres"
+  port: "5432"
+  user: "postgres"
+  password: "qwerty"
+  dbname: "reports_system"
+  ssl_mode: "disable"
+  migrations_path: "etc/migrations"
+jwt:
+  secret: "$ecr3t"
+swagger:
+  host: "localhost:8080"
