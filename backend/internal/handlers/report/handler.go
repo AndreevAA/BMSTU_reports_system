@@ -178,6 +178,7 @@ func (h *Handler) getOneReport(ctx *gin.Context) {
 		return
 	}
 
+	ctx.Header("Server", "ReportsSystem")
 	ctx.JSON(http.StatusOK, n)
 }
 

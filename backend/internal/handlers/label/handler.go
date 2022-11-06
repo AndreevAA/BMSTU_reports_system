@@ -319,7 +319,7 @@ func (h *Handler) deleteLabel(ctx *gin.Context) {
 
 // @Summary Detach label by ID from report by ID
 // @Security ApiKeyAuth
-// @Tags labels
+// @Tags reports
 // @Description detach label by ID from report by ID
 // @Accept  json
 // @Produce  json
@@ -329,7 +329,7 @@ func (h *Handler) deleteLabel(ctx *gin.Context) {
 // @Failure 500 {object}  e.ErrorResponse
 // @Failure 400,404 {object} e.ErrorResponse
 // @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/labels/{id}/labels/{label_id} [delete]
+// @Router /api/v1/reports/{id}/labels/{label_id} [delete]
 func (h *Handler) detachLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {

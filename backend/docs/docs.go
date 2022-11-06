@@ -156,6 +156,243 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/labels": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get labels from user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "labels"
+                ],
+                "summary": "Get all labels",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/label.GetAllLabelsDTO"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/labels/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "get one label by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "labels"
+                ],
+                "summary": "Get one label by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/label.Label"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "delete one label by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "labels"
+                ],
+                "summary": "Delete one label by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "update one label by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "labels"
+                ],
+                "summary": "Update label by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "label info",
+                        "name": "dto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/label.UpdateLabelDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/e.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/reports": {
             "get": {
                 "security": [
@@ -555,244 +792,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/labels": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get labels from user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Get all labels",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/label.GetAllLabelsDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/labels/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get one label by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Get one label by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/label.Label"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "delete one label by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Delete one label by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "update one label by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Update label by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "label info",
-                        "name": "dto",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/label.UpdateLabelDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/labels/{id}/labels/{label_id}": {
+        "/api/v1/reports/{id}/labels/{label_id}": {
             "delete": {
                 "security": [
                     {
@@ -807,7 +807,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "labels"
+                    "reports"
                 ],
                 "summary": "Detach label by ID from report by ID",
                 "parameters": [
@@ -934,82 +934,6 @@ const docTemplate = `{
                 }
             }
         },
-        "report.CreateReportDTO": {
-            "type": "object",
-            "required": [
-                "department",
-                "header"
-            ],
-            "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "department": {
-                    "type": "string"
-                },
-                "header": {
-                    "type": "string"
-                }
-            }
-        },
-        "report.GetAllReportsDTO": {
-            "type": "object",
-            "properties": {
-                "reports": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/report.Report"
-                    }
-                }
-            }
-        },
-        "report.Report": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "department": {
-                    "type": "string"
-                },
-                "edited": {
-                    "type": "string"
-                },
-                "header": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "shortBody": {
-                    "type": "string"
-                },
-                "labels": {
-                    "description": "[]label.Label",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/label.Label"
-                    }
-                }
-            }
-        },
-        "report.UpdateReportDTO": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "department": {
-                    "type": "string"
-                },
-                "header": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
         "label.CreateLabelDTO": {
             "type": "object",
             "required": [
@@ -1062,6 +986,82 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "report.CreateReportDTO": {
+            "type": "object",
+            "required": [
+                "department",
+                "header"
+            ],
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "string"
+                }
+            }
+        },
+        "report.GetAllReportsDTO": {
+            "type": "object",
+            "properties": {
+                "reports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/report.Report"
+                    }
+                }
+            }
+        },
+        "report.Report": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "edited": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "labels": {
+                    "description": "[]label.Label",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/label.Label"
+                    }
+                },
+                "shortBody": {
+                    "type": "string"
+                }
+            }
+        },
+        "report.UpdateReportDTO": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "header": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 }
             }
         }
