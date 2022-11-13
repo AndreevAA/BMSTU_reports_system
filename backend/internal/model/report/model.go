@@ -7,18 +7,16 @@ import (
 )
 
 const (
-	DefaultReportDepartment = "CFD2CF"
-	shortBodyLen            = 255
+	shortBodyLen = 255
 )
 
 type Report struct {
-	ID         int           `json:"id" db:"id"`
-	Header     string        `json:"header" db:"header"`
-	Body       string        `json:"body" db:"body"`
-	ShortBody  string        `json:"shortBody" db:"short_body"`
-	Labels     []label.Label `json:"labels" db:"labels"` // []label.Label
-	Department string        `json:"department" db:"department"`
-	Edited     time.Time     `json:"edited"`
+	ID        int           `json:"id" db:"id"`
+	Header    string        `json:"header" db:"header"`
+	Body      string        `json:"body" db:"body"`
+	ShortBody string        `json:"shortBody" db:"short_body"`
+	Labels    []label.Label `json:"labels" db:"labels"` // []label.Label
+	Edited    time.Time     `json:"edited"`
 }
 
 func (n *Report) GenerateShortBody() {

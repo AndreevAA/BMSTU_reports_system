@@ -1,13 +1,11 @@
 package label
 
 type CreateLabelDTO struct {
-	Name       string `json:"name" binding:"required"`
-	Department string `json:"department" binding:"required"`
+	Name string `json:"name" binding:"required"`
 }
 
 type UpdateLabelDTO struct {
-	Name       string `json:"name" db:"name"`
-	Department string `json:"department" db:"department"`
+	Name string `json:"name" db:"name"`
 }
 
 type GetAllLabelsDTO struct {

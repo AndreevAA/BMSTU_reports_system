@@ -34,12 +34,12 @@ func (r *LabelPostgres) Create(userID, reportID int, t *label.Label) error {
 	}
 
 	createLabelQuery := fmt.Sprintf(
-		`INSERT INTO %s AS t (name, department) VALUES ($1, $2) RETURNING id`,
+		`INSERT INTO %s AS t (name) VALUES ($1) RETURNING id`,
 		labelsTable)
 
 	r.logger.Infof("Label with id %v created", t.ID)
 
-	row := r.db.QueryRow(createLabelQuery, t.Name, t.Department)
+	row := r.db.QueryRow(createLabelQuery, t.Name)
 	err = row.Scan(&t.ID)
 
 	if err != nil {
@@ -88,7 +88,7 @@ func (r *LabelPostgres) GetAll(userID int) ([]label.Label, error) {
 	var labels []label.Label
 	labels = make([]label.Label, 0)
 
-	query := fmt.Sprintf(`SELECT labels_id AS id, name, department FROM
+	query := fmt.Sprintf(`SELECT labels_id AS id, name FROM
 								%s t INNER JOIN %s ut ON ut.labels_id = t.id  WHERE
 								ut.users_id = $1`, labelsTable, usersLabelsTable)
 
@@ -103,7 +103,7 @@ func (r *LabelPostgres) GetAllByReport(userID, reportID int) ([]label.Label, err
 	var labels []label.Label
 	labels = make([]label.Label, 0)
 
-	query := fmt.Sprintf(`SELECT t.id AS id, name, department FROM %s t
+	query := fmt.Sprintf(`SELECT t.id AS id, name FROM %s t
     							INNER JOIN %s ut ON ut.labels_id = t.id
     							INNER JOIN %s nt on t.id = nt.labels_id
     							WHERE users_id = $1 AND reports_id = $2`,
@@ -119,7 +119,7 @@ func (r *LabelPostgres) GetAllByReport(userID, reportID int) ([]label.Label, err
 func (r *LabelPostgres) GetOne(userID, labelID int) (label.Label, error) {
 	var t label.Label
 
-	query := fmt.Sprintf(`SELECT t.id AS id, name, department FROM %s t
+	query := fmt.Sprintf(`SELECT t.id AS id, name FROM %s t
     							INNER JOIN %s ut ON ut.labels_id = t.id
     							INNER JOIN %s nt on t.id = nt.labels_id
     							WHERE users_id = $1 AND t.id = $2`,
@@ -148,11 +148,11 @@ func (r *LabelPostgres) Delete(userID, labelID int) error {
 func (r *LabelPostgres) Update(userID, labelID int, t label.Label) error {
 	query := fmt.Sprintf(
 		`UPDATE %s t SET 
-                name=$1, department=$2 FROM
+                name=$1 FROM
                 %s ut WHERE t.id = ut.labels_id AND 
 				ut.labels_id = $3 AND ut.users_id = $4`,
 		labelsTable, usersLabelsTable)
-	_, err := r.db.Exec(query, t.Name, t.Department, labelID, userID)
+	_, err := r.db.Exec(query, t.Name, labelID, userID)
 
 	return err
 }

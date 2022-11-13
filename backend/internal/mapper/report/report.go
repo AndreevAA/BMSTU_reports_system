@@ -15,12 +15,11 @@ func New(logger logging.Logger) *mapper {
 
 func (m *mapper) MapCreateReportDTO(dto report.CreateReportDTO) report.Report {
 	n := report.Report{
-		ID:         0,
-		Header:     dto.Header,
-		Body:       dto.Body,
-		ShortBody:  "",
-		Labels:     nil,
-		Department: dto.Department,
+		ID:        0,
+		Header:    dto.Header,
+		Body:      dto.Body,
+		ShortBody: "",
+		Labels:    nil,
 	}
 
 	n.GenerateShortBody()
@@ -36,16 +35,12 @@ func (m *mapper) MapGetAllReportsDTO(ns []report.Report) report.GetAllReportsDTO
 }
 
 func (m *mapper) MapUpdateReportDTO(dto report.UpdateReportDTO) report.Report {
-	if dto.Department == "" {
-		dto.Department = report.DefaultReportDepartment
-	}
 
 	n := report.Report{
-		ID:         dto.ID,
-		Header:     dto.Header,
-		Body:       dto.Body,
-		ShortBody:  "",
-		Department: dto.Department,
+		ID:        dto.ID,
+		Header:    dto.Header,
+		Body:      dto.Body,
+		ShortBody: "",
 	}
 
 	n.GenerateShortBody()

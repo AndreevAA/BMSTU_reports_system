@@ -15,17 +15,15 @@ func New(logger logging.Logger) *mapper {
 
 func (m *mapper) MapCreateLabelDTO(dto label.CreateLabelDTO) label.Label {
 	return label.Label{
-		ID:         0,
-		Name:       dto.Name,
-		Department: dto.Department,
+		ID:   0,
+		Name: dto.Name,
 	}
 }
 
 func (m *mapper) MapUpdateLabelDTO(dto label.UpdateLabelDTO) label.Label {
 	return label.Label{
-		ID:         0,
-		Name:       dto.Name,
-		Department: dto.Department,
+		ID:   0,
+		Name: dto.Name,
 	}
 }
 

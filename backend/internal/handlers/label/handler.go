@@ -111,18 +111,6 @@ func (h *Handler) createLabel(ctx *gin.Context) {
 		"%s%s/%v", apiURLGroup, labelsURLGroup, t.ID))
 }
 
-// @Summary Get all labels on one report
-// @Security ApiKeyAuth
-// @Tags labels
-// @Description get labels for report
-// @Accept  json
-// @Produce  json
-// @Param   id  path  string  true  "id"
-// @Success 200 {object} label.GetAllLabelsDTO
-// @Failure 500 {object}  e.ErrorResponse
-// @Failure 400,404 {object} e.ErrorResponse
-// @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/reports/{id}/labels [get]
 func (h *Handler) getAllLabelsOnReport(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {
@@ -157,6 +145,7 @@ func (h *Handler) getAllLabelsOnReport(ctx *gin.Context) {
 // @Summary Get all labels
 // @Security ApiKeyAuth
 // @Tags labels
+// @Parametrs
 // @Description get labels from user
 // @Accept  json
 // @Produce  json
@@ -185,18 +174,6 @@ func (h *Handler) getAllLabels(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, dto)
 }
 
-// @Summary Get one label by ID
-// @Security ApiKeyAuth
-// @Tags labels
-// @Description get one label by ID
-// @Accept  json
-// @Produce  json
-// @Param   id  path  string  true  "id"
-// @Success 200 {object} label.Label
-// @Failure 500 {object}  e.ErrorResponse
-// @Failure 400,404 {object} e.ErrorResponse
-// @Failure default {object}  e.ErrorResponse
-// @Router /api/v1/labels/{id} [get]
 func (h *Handler) getOneLabel(ctx *gin.Context) {
 	userID, err := middleware.GetUserID(ctx)
 	if err != nil {

@@ -49,12 +49,9 @@ definitions:
     type: object
   label.CreateLabelDTO:
     properties:
-      department:
-        type: string
       name:
         type: string
     required:
-    - department
     - name
     type: object
   label.GetAllLabelsDTO:
@@ -66,20 +63,15 @@ definitions:
     type: object
   label.Label:
     properties:
-      department:
-        type: string
       id:
         type: integer
       name:
         type: string
     required:
-    - department
     - name
     type: object
   label.UpdateLabelDTO:
     properties:
-      department:
-        type: string
       name:
         type: string
     type: object
@@ -87,12 +79,9 @@ definitions:
     properties:
       body:
         type: string
-      department:
-        type: string
       header:
         type: string
     required:
-    - department
     - header
     type: object
   report.GetAllReportsDTO:
@@ -105,8 +94,6 @@ definitions:
   report.Report:
     properties:
       body:
-        type: string
-      department:
         type: string
       edited:
         type: string
@@ -125,8 +112,6 @@ definitions:
   report.UpdateReportDTO:
     properties:
       body:
-        type: string
-      department:
         type: string
       header:
         type: string
@@ -303,44 +288,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Delete one label by ID
-      tags:
-      - labels
-    get:
-      consumes:
-      - application/json
-      description: get one label by ID
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/label.Label'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get one label by ID
       tags:
       - labels
     patch:
@@ -559,44 +506,6 @@ paths:
       tags:
       - reports
   /api/v1/reports/{id}/labels:
-    get:
-      consumes:
-      - application/json
-      description: get labels for report
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/label.GetAllLabelsDTO'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/e.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get all labels on one report
-      tags:
-      - labels
     post:
       consumes:
       - application/json

@@ -209,65 +209,6 @@ const docTemplate = `{
             }
         },
         "/api/v1/labels/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get one label by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Get one label by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/label.Label"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            },
             "delete": {
                 "security": [
                     {
@@ -664,65 +605,6 @@ const docTemplate = `{
             }
         },
         "/api/v1/reports/{id}/labels": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "get labels for report",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "labels"
-                ],
-                "summary": "Get all labels on one report",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/label.GetAllLabelsDTO"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/e.ErrorResponse"
-                        }
-                    }
-                }
-            },
             "post": {
                 "security": [
                     {
@@ -937,13 +819,9 @@ const docTemplate = `{
         "label.CreateLabelDTO": {
             "type": "object",
             "required": [
-                "department",
                 "name"
             ],
             "properties": {
-                "department": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 }
@@ -963,13 +841,9 @@ const docTemplate = `{
         "label.Label": {
             "type": "object",
             "required": [
-                "department",
                 "name"
             ],
             "properties": {
-                "department": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "integer"
                 },
@@ -981,9 +855,6 @@ const docTemplate = `{
         "label.UpdateLabelDTO": {
             "type": "object",
             "properties": {
-                "department": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 }
@@ -992,14 +863,10 @@ const docTemplate = `{
         "report.CreateReportDTO": {
             "type": "object",
             "required": [
-                "department",
                 "header"
             ],
             "properties": {
                 "body": {
-                    "type": "string"
-                },
-                "department": {
                     "type": "string"
                 },
                 "header": {
@@ -1022,9 +889,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "body": {
-                    "type": "string"
-                },
-                "department": {
                     "type": "string"
                 },
                 "edited": {
@@ -1052,9 +916,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "body": {
-                    "type": "string"
-                },
-                "department": {
                     "type": "string"
                 },
                 "header": {

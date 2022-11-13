@@ -10,7 +10,6 @@ CREATE TABLE reports (
     id SERIAL NOT NULL UNIQUE,
     header VARCHAR(255) NOT NULL,
     short_body VARCHAR(255),
-    department VARCHAR(6) NOT NULL,
     edited TIMESTAMP WITH TIME ZONE
 );
 
@@ -27,8 +26,7 @@ CREATE TABLE users_reports (
 
 CREATE TABLE labels (
     id SERIAL NOT NULL UNIQUE,
-    name VARCHAR(255) NOT NULL,
-    department VARCHAR(6) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE labels_reports (

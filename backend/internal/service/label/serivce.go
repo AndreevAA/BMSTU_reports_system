@@ -77,9 +77,6 @@ func (s *Service) Update(userID, labelID int, t label.Label) error {
 		return err
 	}
 
-	if t.Department == "" {
-		t.Department = tp.Department
-	}
 	if t.Name == "" {
 		t.Name = tp.Name
 	}
@@ -99,7 +96,7 @@ func (s *Service) Detach(userID, labelID, reportID int) error {
 	}
 
 	t, err := s.labelsRepository.GetOne(userID, labelID)
-	s.logger.Infof("Found label %v: %v, %v", labelID, t.Name, t.Department)
+	s.logger.Infof("Found label %v: %v, %v", labelID, t.Name)
 	if err != nil {
 		return err
 	}

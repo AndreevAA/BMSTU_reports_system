@@ -37,9 +37,9 @@ func (r *ReportPostgres) Create(userID int, n *report.Report) error {
 	}
 
 	createReportQuery := fmt.Sprintf(`
-	INSERT INTO %s (header, short_body, department, edited)
-	VALUES ($1, $2, $3, $4) RETURNING id`, reportsTable)
-	row := tx.QueryRow(createReportQuery, n.Header, n.ShortBody, n.Department, time.Now())
+	INSERT INTO %s (header, short_body, edited)
+	VALUES ($1, $2, $3) RETURNING id`, reportsTable)
+	row := tx.QueryRow(createReportQuery, n.Header, n.ShortBody, time.Now())
 	if err := row.Scan(&n.ID); err != nil {
 		tx.Rollback()
 		r.logger.Error(err)
@@ -74,7 +74,7 @@ func (r *ReportPostgres) GetAll(userID int) ([]report.Report, error) {
 	reports = make([]report.Report, 0)
 
 	getReportsQuery := fmt.Sprintf(
-		`SELECT n.id, n.header, n.short_body, n.department, n.edited FROM %s n
+		`SELECT n.id, n.header, n.short_body, n.edited FROM %s n
     			JOIN %s un ON n.id = un.reports_id
     			WHERE un.users_id = $1`,
 		reportsTable,
@@ -98,7 +98,7 @@ func (r *ReportPostgres) GetOne(userID, reportID int) (report.Report, error) {
 	var n report.Report
 
 	selectReportQuery := fmt.Sprintf(
-		`SELECT n.id, n.header, n.short_body, n.department, n.edited FROM
+		`SELECT n.id, n.header, n.short_body, n.edited FROM
 				%s n JOIN %s un ON n.id = un.reports_id
 				WHERE un.users_id = $1 AND un.reports_id = $2`,
 		reportsTable,
@@ -151,7 +151,7 @@ func (r *ReportPostgres) Update(userID int, n report.Report) error {
 	}
 	reportQuery := fmt.Sprintf(
 		`UPDATE %s n SET 
-                header=$1, short_body=$2, department = $3, edited=$4 FROM
+                header=$1, short_body=$2, edited=$4 FROM
                 %s un WHERE n.id = un.reports_id AND 
 				un.reports_id = $5 AND un.users_id = $6`,
 		reportsTable, usersReportsTable)
@@ -159,7 +159,6 @@ func (r *ReportPostgres) Update(userID int, n report.Report) error {
 		reportQuery,
 		n.Header,
 		n.ShortBody,
-		n.Department,
 		time.Now().UTC().Format(time.RFC3339),
 		n.ID,
 		userID,
